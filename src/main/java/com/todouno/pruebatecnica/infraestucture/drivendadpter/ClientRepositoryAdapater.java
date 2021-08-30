@@ -3,7 +3,6 @@ package com.todouno.pruebatecnica.infraestucture.drivendadpter;
 import com.todouno.pruebatecnica.domain.model.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Flux;
 
 @Repository
 public class ClientRepositoryAdapater implements ProductRepository {
@@ -12,8 +11,8 @@ public class ClientRepositoryAdapater implements ProductRepository {
     ProductDataRepository productDataRepository;
 
     @Override
-    public Flux<ProductData> getAllProducts() {
-        return Flux.fromIterable(productDataRepository.findAll());
+    public Iterable<ProductData> getAllProducts() {
+        return productDataRepository.findAll();
     }
 
     @Override

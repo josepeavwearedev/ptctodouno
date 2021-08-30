@@ -1,10 +1,10 @@
 package com.todouno.pruebatecnica.infraestucture.entrypoint;
 
-import com.todouno.pruebatecnica.domain.model.Product;
 import com.todouno.pruebatecnica.domain.usecase.ProductUseCase;
 import com.todouno.pruebatecnica.infraestucture.drivendadpter.ProductData;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @RestController
 public class Controller {
@@ -21,7 +21,7 @@ public class Controller {
     }
 
     @GetMapping(value = "/products")
-    public Flux<Product> getProducts() {
+    public List<ProductData> getProducts() {
         return productUseCase.getAllProducts();
     }
 

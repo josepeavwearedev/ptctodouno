@@ -1,11 +1,13 @@
 package com.todouno.pruebatecnica.domain.usecase;
 
-import com.todouno.pruebatecnica.domain.model.Product;
 import com.todouno.pruebatecnica.domain.model.ProductRepository;
 import com.todouno.pruebatecnica.infraestucture.drivendadpter.ProductData;
 import com.todouno.pruebatecnica.infraestucture.entrypoint.ProductDTO;
 import lombok.AllArgsConstructor;
-import reactor.core.publisher.Flux;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static com.todouno.pruebatecnica.domain.usecase.Convertirdor.convertirDtoAData;
 
@@ -13,8 +15,9 @@ import static com.todouno.pruebatecnica.domain.usecase.Convertirdor.convertirDto
 public class ProductUseCase {
     private ProductRepository productRepository;
 
-    public Flux<Product> getAllProducts() {
-        return productRepository.getAllProducts().map(Convertirdor::convertir);
+    public List<ProductData> getAllProducts() {
+        return StreamSupport.stream(productRepository.getAllProducts().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     public ProductData saveProduct(ProductDTO productDto) {
@@ -26,6 +29,6 @@ public class ProductUseCase {
     }
 
     public void deleteProduct(ProductDTO productDto) {
-        productRepository.deleteProduct(convertirDtoAData(productDto));;
+        productRepository.deleteProduct(convertirDtoAData(productDto));
     }
 }
