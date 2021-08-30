@@ -26,11 +26,11 @@ public class ProductUseCase {
         return convertir(productRepository.saveProduct(convertirDtoAData(productDto)));
     }
 
-    public Product updateProduct(ProductDTO productDto) {
-        return convertir(productRepository.saveProduct(convertirDtoAData(productDto)));
+    public Product updateProduct(ProductDTO productDto, String id) {
+        return convertir(productRepository.updateProduct(convertirDtoAData(productDto), id));
     }
 
-    public void deleteProduct(ProductDTO productDto) {
-        productRepository.deleteProduct(convertirDtoAData(productDto));
+    public void deleteProduct(ProductDTO productDto, String id) {
+        productRepository.deleteProduct(convertirDtoAData(productDto), id);
     }
 }

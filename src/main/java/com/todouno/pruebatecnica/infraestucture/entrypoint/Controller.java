@@ -35,13 +35,13 @@ public class Controller {
         return convertirDto(productUseCase.saveProduct(productDto));
     }
 
-    @PutMapping(value = "/products")
-    public ProductDTO updateProduct(@RequestBody ProductDTO productDto) {
-        return convertirDto(productUseCase.updateProduct(productDto));
+    @PutMapping(value = "/products/{id}")
+    public ProductDTO updateProduct(@RequestBody ProductDTO productDto, @PathVariable String id) {
+        return convertirDto(productUseCase.updateProduct(productDto, id));
     }
 
-    @DeleteMapping(value = "/products")
-    public void deleteProduct(@RequestBody ProductDTO productDto) {
-        productUseCase.deleteProduct(productDto);
+    @DeleteMapping(value = "/products/{id}")
+    public void deleteProduct(@RequestBody ProductDTO productDto,@PathVariable String id) {
+        productUseCase.deleteProduct(productDto, id);
     }
 }

@@ -21,8 +21,16 @@ public class ClientRepositoryAdapater implements ProductRepository {
     }
 
     @Override
-    public void deleteProduct(ProductData productData) {
-        productDataRepository.delete(productData);
+    public ProductData updateProduct(ProductData productData, String id) {
+        if (productDataRepository.existsById(id))
+            return productDataRepository.save(productData);
+        return new ProductData();
+    }
+
+    @Override
+    public void deleteProduct(ProductData productData, String id) {
+        if (productDataRepository.existsById(id))
+            productDataRepository.delete(productData);
     }
 
 }
