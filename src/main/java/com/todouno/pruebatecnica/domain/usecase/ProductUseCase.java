@@ -1,7 +1,7 @@
 package com.todouno.pruebatecnica.domain.usecase;
 
+import com.todouno.pruebatecnica.domain.model.Product;
 import com.todouno.pruebatecnica.domain.model.ProductRepository;
-import com.todouno.pruebatecnica.infraestucture.drivendadpter.ProductData;
 import com.todouno.pruebatecnica.infraestucture.entrypoint.ProductDTO;
 import lombok.AllArgsConstructor;
 
@@ -9,23 +9,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static com.todouno.pruebatecnica.domain.usecase.Convertirdor.convertirDtoAData;
+import static com.todouno.pruebatecnica.domain.usecase.Convertidor.convertir;
+import static com.todouno.pruebatecnica.domain.usecase.Convertidor.convertirDtoAData;
 
 @AllArgsConstructor
 public class ProductUseCase {
     private ProductRepository productRepository;
 
-    public List<ProductData> getAllProducts() {
+    public List<Product> getAllProducts() {
         return StreamSupport.stream(productRepository.getAllProducts().spliterator(), false)
+                .map(Convertidor::convertir)
                 .collect(Collectors.toList());
     }
 
-    public ProductData saveProduct(ProductDTO productDto) {
-        return productRepository.saveProduct(convertirDtoAData(productDto));
+    public Product saveProduct(ProductDTO productDto) {
+        return convertir(productRepository.saveProduct(convertirDtoAData(productDto)));
     }
 
-    public ProductData updateProduct(ProductDTO productDto) {
-        return productRepository.saveProduct(convertirDtoAData(productDto));
+    public Product updateProduct(ProductDTO productDto) {
+        return convertir(productRepository.saveProduct(convertirDtoAData(productDto)));
     }
 
     public void deleteProduct(ProductDTO productDto) {

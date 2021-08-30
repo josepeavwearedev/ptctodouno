@@ -1,10 +1,13 @@
 package com.todouno.pruebatecnica.infraestucture.entrypoint;
 
+import com.todouno.pruebatecnica.domain.usecase.Convertidor;
 import com.todouno.pruebatecnica.domain.usecase.ProductUseCase;
-import com.todouno.pruebatecnica.infraestucture.drivendadpter.ProductData;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.todouno.pruebatecnica.domain.usecase.Convertidor.convertirDto;
 
 @RestController
 public class Controller {
@@ -21,18 +24,20 @@ public class Controller {
     }
 
     @GetMapping(value = "/products")
-    public List<ProductData> getProducts() {
-        return productUseCase.getAllProducts();
+    public List<ProductDTO> getProducts() {
+        return productUseCase.getAllProducts().stream()
+                .map(Convertidor::convertirDto)
+                .collect(Collectors.toList());
     }
 
     @PostMapping(value = "/products")
-    public ProductData saveProduct(@RequestBody ProductDTO productDto) {
-        return productUseCase.saveProduct(productDto);
+    public ProductDTO saveProduct(@RequestBody ProductDTO productDto) {
+        return convertirDto(productUseCase.saveProduct(productDto));
     }
 
     @PutMapping(value = "/products")
-    public ProductData updateProduct(@RequestBody ProductDTO productDto) {
-        return productUseCase.updateProduct(productDto);
+    public ProductDTO updateProduct(@RequestBody ProductDTO productDto) {
+        return convertirDto(productUseCase.updateProduct(productDto));
     }
 
     @DeleteMapping(value = "/products")
